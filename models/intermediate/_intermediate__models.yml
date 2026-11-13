@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: int_date_spine
+    columns:
+      - name: date_day
+        data_tests: [unique, not_null]
+
+  - name: int_rack_prices__daily
+    description: Rack price for every day, terminal and product, carrying the last published price forward.
+    columns:
+      - name: rack_price_day_key
+        data_tests: [unique, not_null]
+      - name: rack_price
+        data_tests: [not_null]
+
+  - name: int_sales_lines__priced
+    description: Each invoice line with its as-of rack price and expected price from the pricing waterfall.
+    columns:
+      - name: sales_line_id
+        description: Must stay unique. Overlapping agreements would fan out without the waterfall ranking.
+        data_tests: [unique, not_null]
+      - name: rack_price
+        data_tests: [not_null]
+      - name: expected_unit_price
+        data_tests: [not_null]

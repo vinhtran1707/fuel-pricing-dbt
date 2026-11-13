@@ -1,0 +1,37 @@
+name: fuel_pricing
+version: "1.0.0"
+config-version: 2
+profile: fuel_pricing
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  fuel_pricing:
+    staging:
+      +materialized: view
+      +schema: staging
+    intermediate:
+      +materialized: view
+      +schema: intermediate
+    marts:
+      +materialized: table
+      +schema: marts
+
+seeds:
+  fuel_pricing:
+    +schema: raw
+    raw_customer_accounts:
+      +column_types: {created_at: date}
+    raw_rack_prices:
+      +column_types: {price_date: date, rack_price: 'decimal(12,4)'}
+    raw_price_agreements:
+      +column_types: {product_code: varchar, terminal_code: varchar, price_value: 'decimal(12,4)', effective_from: date, effective_to: date}
+    raw_tier_differentials:
+      +column_types: {rack_differential: 'decimal(12,4)'}
+    raw_sales_lines:
+      +column_types: {invoice_date: date, gallons: integer, invoice_unit_price: 'decimal(12,4)', loaded_at: timestamp}

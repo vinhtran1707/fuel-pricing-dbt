@@ -1,0 +1,13 @@
+price_tier,product_family,rack_differential
+A,Diesel,0.0731
+A,Gasoline,0.1003
+A,Jet Fuel,0.0901
+A,Marine,0.1042
+B,Diesel,0.1312
+B,Gasoline,0.1687
+B,Jet Fuel,0.1565
+B,Marine,0.1228
+C,Diesel,0.2024
+C,Gasoline,0.1946
+C,Jet Fuel,0.2062
+C,Marine,0.2327

@@ -1,0 +1,7 @@
+product_code,product_name,product_family,unit_of_measure
+RUL,Regular Unleaded 87,Gasoline,GAL
+PUL,Premium Unleaded 91,Gasoline,GAL
+ULSD,Ultra Low Sulfur Diesel,Diesel,GAL
+B20,Biodiesel Blend B20,Diesel,GAL
+JETA,Jet A,Jet Fuel,GAL
+MGO,Marine Gas Oil,Marine,GAL

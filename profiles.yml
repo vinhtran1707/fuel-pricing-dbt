@@ -1,0 +1,9 @@
+# Local profile: runs the whole project on DuckDB with no setup.
+# For Snowflake, copy profiles.example.yml to ~/.dbt/profiles.yml instead.
+fuel_pricing:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: fuel_pricing.duckdb
+      threads: 4

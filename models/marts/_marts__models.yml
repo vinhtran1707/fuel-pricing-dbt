@@ -1,0 +1,74 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: Calendar dimension. Plays two roles for sales (invoice date and rack publish date).
+    columns:
+      - name: date_key
+        data_tests: [unique, not_null]
+
+  - name: dim_customer
+    description: Conformed customer dimension across all operating companies.
+    columns:
+      - name: customer_id
+        data_tests: [unique, not_null]
+      - name: customer_name
+        description: Cleaned name from the customer's oldest account.
+        data_tests: [not_null]
+
+  - name: dim_product
+    columns:
+      - name: product_code
+        data_tests: [unique, not_null]
+
+  - name: dim_terminal
+    description: Loading terminals and the island each one serves.
+    columns:
+      - name: terminal_code
+        data_tests: [unique, not_null]
+
+  - name: fct_sales_margin
+    description: >
+      Grain is one invoice line. Measures margin over rack and price variance
+      against the customer's agreement.
+    columns:
+      - name: sales_line_id
+        data_tests: [unique, not_null]
+      - name: date_key
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: customer_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_customer')
+                field: customer_id
+      - name: product_code
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_product')
+                field: product_code
+      - name: terminal_code
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_terminal')
+                field: terminal_code
+      - name: pricing_source
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['contract_product_terminal', 'contract_product', 'contract_customer', 'tier_default']
+      - name: margin_per_gallon
+        description: Invoice unit price minus rack price for the sale date.
+        data_tests: [not_null]
+
+  - name: rpt_island_margin_monthly
+    description: Monthly margin and billing exceptions by island and product family.
+    columns:
+      - name: island_month_key
+        data_tests: [unique, not_null]

@@ -1,0 +1,71 @@
+version: 2
+
+models:
+  - name: stg_erp__customer_accounts
+    description: One row per ERP account. Cleans account names and builds the account_key used by sales lines.
+    columns:
+      - name: account_key
+        description: company_code|account_number, unique across operating companies.
+        data_tests: [unique, not_null]
+      - name: customer_id
+        description: Shared customer identifier that conforms accounts across companies.
+        data_tests: [not_null]
+      - name: price_tier
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['A', 'B', 'C']
+
+  - name: stg_erp__products
+    columns:
+      - name: product_code
+        data_tests: [unique, not_null]
+
+  - name: stg_erp__terminals
+    columns:
+      - name: terminal_code
+        data_tests: [unique, not_null]
+      - name: island
+        data_tests: [not_null]
+
+  - name: stg_erp__rack_prices
+    description: Published rack prices (business days only).
+    columns:
+      - name: rack_price
+        data_tests: [not_null, non_negative]
+
+  - name: stg_erp__price_agreements
+    columns:
+      - name: agreement_id
+        data_tests: [unique, not_null]
+      - name: price_type
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['fixed', 'rack_plus']
+      - name: customer_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_erp__customer_accounts')
+                field: customer_id
+
+  - name: stg_erp__tier_differentials
+    columns:
+      - name: rack_differential
+        data_tests: [not_null]
+
+  - name: stg_erp__sales_lines
+    description: Invoice lines, deduplicated to the latest load per invoice line.
+    columns:
+      - name: sales_line_id
+        data_tests: [unique, not_null]
+      - name: account_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_erp__customer_accounts')
+                field: account_key
+      - name: gallons
+        data_tests: [not_null, non_negative]

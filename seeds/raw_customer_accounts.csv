@@ -1,0 +1,37 @@
+company_code,account_number,account_name,customer_id,price_tier,segment,created_at
+NOC,NOC-29385,Aloha Fleet Services Inc,C0001,A,Retail Station,2025-01-31
+SRC,SRC-17397,Pacific Paving LLC,C0002,B,Aviation,2025-06-21
+NOC,NOC-84598,ISLAND AIR CHARTERS llc,C0003,B,Construction,2023-11-03
+WIC,WIC-22321,Kona  Marine Supply Co.,C0004,B,Aviation,2024-04-03
+WIC,WIC-49765,  Haleakala Tours  INC.,C0005,A,Commercial Fleet,2025-03-25
+EFC,EFC-71323,Garden Isle Builders,C0006,B,Retail Station,2023-12-23
+NOC,NOC-21857,Makai Trucking,C0007,B,Commercial Fleet,2024-09-02
+EFC,EFC-86619,Mauka Farms INC.,C0008,C,Commercial Fleet,2024-10-20
+EFC,EFC-42699,LAHAINA WATER TAXI,C0009,A,Construction,2025-05-06
+SRC,SRC-19135,Lahaina  Water Taxi LLC,C0009,A,Construction,2025-07-05
+NOC,NOC-77696,Lahaina  Water Taxi,C0009,A,Construction,2024-12-16
+EFC,EFC-22715,Windward Waste Haulers,C0010,C,Retail Station,2025-04-27
+SRC,SRC-64268,Hilo Bay Ferries Ltd,C0011,C,Aviation,2024-11-28
+WIC,WIC-11330,Upcountry Landscaping,C0012,B,Aviation,2024-05-27
+WIC,WIC-98564,North Shore Rentals Ltd,C0013,B,Aviation,2023-12-31
+SRC,SRC-11859,NORTH SHORE RENTALS,C0013,B,Aviation,2024-07-16
+NOC,NOC-92410,  North Shore Rentals  INC.,C0013,B,Aviation,2025-11-05
+SRC,SRC-48211,  Kauai Coffee Roasters ,C0014,A,Commercial Fleet,2025-01-15
+WIC,WIC-81638,EWA LOGISTICS,C0015,B,Retail Station,2024-06-11
+NOC,NOC-13030,  Ewa Logistics  llc,C0015,B,Retail Station,2025-07-17
+SRC,SRC-70137,Ewa Logistics Co.,C0015,B,Retail Station,2023-09-23
+NOC,NOC-52395,Kihei Fuel Stop,C0016,C,Retail Station,2024-12-01
+SRC,SRC-16361,Kihei Fuel Stop Ltd,C0016,C,Retail Station,2023-12-31
+SRC,SRC-96590,   Volcano Excavation  INC.,C0017,A,Construction,2025-02-18
+NOC,NOC-91761,VOLCANO EXCAVATION llc,C0017,A,Construction,2023-08-11
+SRC,SRC-63796,Leeward Concrete,C0018,B,Construction,2023-09-29
+EFC,EFC-25239,Leeward  Concrete,C0018,B,Construction,2023-11-04
+SRC,SRC-15966,Hanalei  Charters,C0019,B,Aviation,2023-08-12
+WIC,WIC-19530,DIAMOND HEAD DELIVERY LLC,C0020,C,Commercial Fleet,2025-08-17
+EFC,EFC-72745,  Honokaa Ranch  INC.,C0021,B,Retail Station,2023-09-21
+NOC,NOC-54094,HONOKAA RANCH,C0021,B,Retail Station,2024-11-28
+NOC,NOC-24082,  Kapalua Shuttle  Inc,C0022,C,Retail Station,2025-07-01
+SRC,SRC-78260,Pearl City Movers,C0023,A,Commercial Fleet,2025-03-02
+WIC,WIC-88957,  Pearl City Movers  LLC,C0023,A,Commercial Fleet,2024-12-12
+EFC,EFC-74799,Pearl City Movers,C0023,A,Commercial Fleet,2023-10-23
+WIC,WIC-62221,Waimea Aviation llc,C0024,A,Aviation,2024-11-20
