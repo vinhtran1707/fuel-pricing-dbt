@@ -151,6 +151,29 @@ write(
 )
 
 
+# --- price tier changes (slowly changing attribute) -------------------------
+# About a third of customers are re-tiered once during the period after a volume
+# review. A separate RNG keeps every other generated row identical.
+tier_rng = random.Random(42)
+tier_changes = []
+for cid, tier, _ in customers:
+    if tier_rng.random() < 0.35:
+        new_tier = tier_rng.choice([t for t in ("A", "B", "C") if t != tier])
+        changed = START + timedelta(days=tier_rng.randint(31, 150))
+        tier_changes.append((f"TC{len(tier_changes) + 1:04d}", cid, new_tier, changed.isoformat(),
+                             "volume review"))
+write("raw_customer_tier_changes",
+      ["change_id", "customer_id", "new_price_tier", "changed_at", "change_reason"], tier_changes)
+change_by_cust = {c[1]: (c[2], date.fromisoformat(c[3])) for c in tier_changes}
+
+
+def tier_asof(cid, onboarding_tier, day):
+    """Price tier in effect on a given day (onboarding tier until a change takes effect)."""
+    if cid in change_by_cust and day >= change_by_cust[cid][1]:
+        return change_by_cust[cid][0]
+    return onboarding_tier
+
+
 def expected_price(cid, tier, pcode, fam, tcode, day):
     """Python reference of the waterfall (used only to generate invoice prices)."""
     rack = rack_asof(day, tcode, pcode)
@@ -183,7 +206,7 @@ while d <= END:
         pcode = "JETA" if seg == "Aviation" else "MGO" if seg == "Marine" else random.choice(
             ["RUL", "PUL", "ULSD", "B20"])
         tcode = random.choice(TERMINALS)[0]
-        rack, exp = expected_price(cid, tier, pcode, prod_fam[pcode], tcode, d)
+        rack, exp = expected_price(cid, tier_asof(cid, tier, d), pcode, prod_fam[pcode], tcode, d)
         billed = exp if random.random() > 0.07 else exp + random.choice([-0.05, -0.03, 0.02, 0.04])
         gallons = random.choice([500, 1200, 2500, 4000, 7500, 8000])
         inv += 1

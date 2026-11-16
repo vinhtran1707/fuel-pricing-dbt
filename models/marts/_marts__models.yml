@@ -16,6 +16,21 @@ models:
         description: Cleaned name from the customer's oldest account.
         data_tests: [not_null]
 
+  - name: dim_customer_history
+    description: >
+      SCD Type 2 customer dimension. One row per customer per price tier version,
+      valid on [valid_from, valid_to). Facts join on customer_history_key to get
+      the tier in effect on the sale date.
+    columns:
+      - name: customer_history_key
+        data_tests: [unique, not_null]
+      - name: customer_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_customer')
+                field: customer_id
+
   - name: dim_product
     columns:
       - name: product_code
@@ -46,6 +61,14 @@ models:
               arguments:
                 to: ref('dim_customer')
                 field: customer_id
+      - name: customer_history_key
+        description: Point-in-time key to the customer's tier version on the sale date.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customer_history')
+                field: customer_history_key
       - name: product_code
         data_tests:
           - relationships:

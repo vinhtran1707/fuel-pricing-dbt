@@ -12,6 +12,8 @@ select
     line_number,
     invoice_date                                                    as date_key,
     customer_id,
+    customer_history_key,
+    price_tier                                                      as price_tier_at_sale,
     account_key,
     split_part(account_key, '|', 1)                                 as company_code,
     product_code,

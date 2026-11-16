@@ -7,14 +7,22 @@
 --   4. no contract -> tier default differential over rack
 -- Ranking candidate agreements with row_number() keeps exactly one price per
 -- line, so the fact table can never fan out when agreements overlap.
+-- The tier default uses the customer's tier AS OF the invoice date (point-in-time
+-- join to the SCD Type 2 history), not today's tier, so re-tiering a customer
+-- never rewrites the expected price of past sales.
 with sales as (
     select
         s.*,
         a.customer_id,
-        a.price_tier,
+        h.customer_history_key,
+        h.price_tier,
         p.product_family
     from {{ ref('stg_erp__sales_lines') }} s
     inner join {{ ref('stg_erp__customer_accounts') }} a on a.account_key = s.account_key
+    inner join {{ ref('int_customer_tier_history') }} h
+        on  h.customer_id  = a.customer_id
+        and s.invoice_date >= h.valid_from
+        and s.invoice_date <  h.valid_to
     inner join {{ ref('stg_erp__products') }} p          on p.product_code = s.product_code
 ),
 
@@ -54,6 +62,7 @@ select
     s.invoice_date,
     s.account_key,
     s.customer_id,
+    s.customer_history_key,
     s.price_tier,
     s.product_code,
     s.product_family,

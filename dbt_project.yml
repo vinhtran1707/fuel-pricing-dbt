@@ -9,6 +9,11 @@ test-paths: ["tests"]
 macro-paths: ["macros"]
 target-path: "target"
 clean-targets: ["target", "dbt_packages"]
+snapshot-paths: ["snapshots"]
+
+vars:
+  # Replays the ERP customer master as of a date for the snapshot demo.
+  profile_as_of_date: "9999-12-31"
 
 models:
   fuel_pricing:
@@ -27,6 +32,8 @@ seeds:
     +schema: raw
     raw_customer_accounts:
       +column_types: {created_at: date}
+    raw_customer_tier_changes:
+      +column_types: {changed_at: date}
     raw_rack_prices:
       +column_types: {price_date: date, rack_price: 'decimal(12,4)'}
     raw_price_agreements:

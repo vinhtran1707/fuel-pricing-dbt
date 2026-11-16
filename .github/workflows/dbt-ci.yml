@@ -15,6 +15,14 @@ jobs:
           python-version: "3.12"
       - name: Install dbt
         run: pip install -r requirements.txt
+      - name: Load seeds and staging
+        run: |
+          dbt seed --profiles-dir .
+          dbt run --profiles-dir . -s stg_erp__customer_accounts stg_erp__customer_tier_changes
+      - name: Snapshot the customer master at the start of the period
+        run: dbt snapshot --profiles-dir . --vars '{profile_as_of_date: 2026-01-01}'
+      - name: Snapshot again after tier changes (records Type 2 history)
+        run: dbt snapshot --profiles-dir .
       - name: Build and test every model
         run: dbt build --profiles-dir .
       - name: Generate docs

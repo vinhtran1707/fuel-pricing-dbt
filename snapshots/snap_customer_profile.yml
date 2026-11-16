@@ -1,0 +1,12 @@
+snapshots:
+  - name: snap_customer_profile
+    description: >
+      Type 2 history of the ERP customer master, captured by dbt snapshot. Each
+      time the tier changes, the old row is closed (dbt_valid_to) and a new row
+      opens, using the ERP's updated_at as the business effective date.
+    relation: ref('stg_erp__customer_profile')
+    config:
+      schema: snapshots
+      unique_key: customer_id
+      strategy: timestamp
+      updated_at: updated_at

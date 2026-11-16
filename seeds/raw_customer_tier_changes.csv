@@ -1,0 +1,12 @@
+change_id,customer_id,new_price_tier,changed_at,change_reason
+TC0001,C0002,C,2026-03-04,volume review
+TC0002,C0003,A,2026-04-28,volume review
+TC0003,C0007,A,2026-02-28,volume review
+TC0004,C0008,A,2026-04-13,volume review
+TC0005,C0009,C,2026-03-01,volume review
+TC0006,C0011,A,2026-05-09,volume review
+TC0007,C0014,B,2026-02-28,volume review
+TC0008,C0016,A,2026-03-21,volume review
+TC0009,C0017,C,2026-04-19,volume review
+TC0010,C0018,A,2026-05-05,volume review
+TC0011,C0020,B,2026-02-11,volume review

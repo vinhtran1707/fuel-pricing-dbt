@@ -69,3 +69,28 @@ models:
                 field: account_key
       - name: gallons
         data_tests: [not_null, non_negative]
+
+  - name: stg_erp__customer_tier_changes
+    description: Audit log of customer price tier changes.
+    columns:
+      - name: change_id
+        data_tests: [unique, not_null]
+      - name: customer_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_erp__customer_accounts')
+                field: customer_id
+      - name: new_price_tier
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['A', 'B', 'C']
+
+  - name: stg_erp__customer_profile
+    description: Current-state customer master (overwrites tier in place). Source for snap_customer_profile.
+    columns:
+      - name: customer_id
+        data_tests: [unique, not_null]
+      - name: updated_at
+        data_tests: [not_null]

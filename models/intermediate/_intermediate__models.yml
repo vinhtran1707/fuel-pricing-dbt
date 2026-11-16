@@ -24,3 +24,9 @@ models:
         data_tests: [not_null]
       - name: expected_unit_price
         data_tests: [not_null]
+
+  - name: int_customer_tier_history
+    description: SCD Type 2 price tier history rebuilt from the tier change log.
+    columns:
+      - name: customer_history_key
+        data_tests: [unique, not_null]

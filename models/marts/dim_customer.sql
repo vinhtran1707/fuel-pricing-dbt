@@ -1,6 +1,7 @@
 -- Conformed customer dimension: one row per customer across all operating
 -- companies. The display name comes from the customer's oldest account so it
 -- stays stable when new accounts are opened under different spellings.
+-- price_tier is the CURRENT tier; use dim_customer_history for tier over time.
 with accounts as (
     select * from {{ ref('stg_erp__customer_accounts') }}
 ),
@@ -19,7 +20,6 @@ named as (
 rollup as (
     select
         customer_id,
-        max(price_tier)                     as price_tier,
         max(segment)                        as segment,
         count(*)                            as account_count,
         min(account_created_at)             as first_account_created_at,
@@ -31,7 +31,7 @@ rollup as (
 select
     r.customer_id,
     n.account_name_clean                    as customer_name,
-    r.price_tier,
+    h.price_tier                            as current_price_tier,
     r.segment,
     r.account_count,
     r.company_codes,
@@ -40,3 +40,6 @@ from rollup r
 inner join named n
     on  n.customer_id = r.customer_id
     and n.account_age_rank = 1
+inner join {{ ref('int_customer_tier_history') }} h
+    on  h.customer_id = r.customer_id
+    and h.is_current
